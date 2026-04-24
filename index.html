@@ -1,0 +1,149 @@
+<!--
+MODZ GARAGE: Modern Car Inventory + Modification Platform
+
+Features:
+- Homepage with animated hero
+- Car inventory grid with filters/sorting
+- Car detail modal
+- 3D configurator (Three.js)
+- Real-time price engine
+- Wishlist & recently viewed
+- Share build, checkout, build/reset/random, price breakdown, mod recommendations
+- Premium dark neon UI, glassmorphism, GSAP-level animations
+
+Task Progress:
+- [ ] Analyze requirements and plan structure
+- [ ] Design and implement index.html layout (hero, inventory, modals, panels)
+- [ ] Implement style.css (dark neon, glassmorphism, animations, responsive)
+- [ ] Implement script.js (inventory logic, filters, sorting, modal, wishlist, recently viewed)
+- [ ] Integrate Three.js 3D car viewer and configurator
+- [ ] Implement modification options and real-time price engine
+- [ ] Add advanced UI/UX animations (GSAP/micro-interactions)
+- [ ] Implement wishlist, recently viewed, share build, checkout, build/reset/random, price breakdown, mod recommendations
+- [ ] Optimize performance (lazy loading, animation efficiency)
+- [ ] Test all features and verify smooth experience
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MODZ GARAGE</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link rel="icon" href="logo.jpeg" type="image/jpeg"/>
+</head>
+<body>
+  <!-- HERO SECTION -->
+  <section id="hero" class="fullscreen">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <img src="logo.jpeg" alt="MODZ GARAGE Logo" class="logo"/>
+      <h1 class="hero-title neon-cyan">MODZ GARAGE</h1>
+      <p class="hero-subtitle">Build. Mod. Dream.</p>
+      <button id="browseBtn" class="cta neon-magenta">Browse Cars</button>
+    </div>
+    <div class="scroll-indicator"></div>
+  </section>
+
+  <!-- CAR INVENTORY -->
+  <section id="inventory" class="hidden">
+    <div class="inventory-header glass">
+      <h2>Car Inventory</h2>
+      <div class="filters">
+        <input type="text" id="searchInput" placeholder="Search by name or brand"/>
+        <select id="brandFilter">
+          <option value="">All Brands</option>
+        </select>
+        <input type="range" id="priceRange" min="0" max="200000" step="1000"/>
+        <span id="priceValue"></span>
+        <select id="sortSelect">
+          <option value="default">Sort</option>
+          <option value="low-high">Price: Low-High</option>
+          <option value="high-low">Price: High-Low</option>
+        </select>
+      </div>
+    </div>
+    <div id="carGrid" class="car-grid"></div>
+  </section>
+
+  <!-- CAR DETAIL MODAL -->
+  <div id="carModal" class="modal hidden">
+    <div class="modal-bg"></div>
+    <div class="modal-content glass">
+      <button class="close-modal">&times;</button>
+      <div class="modal-main">
+        <img id="modalCarImg" src="" alt="Car" class="modal-car-img"/>
+        <div class="modal-info">
+          <h3 id="modalCarName"></h3>
+          <p id="modalCarBrand"></p>
+          <p id="modalCarPrice"></p>
+          <div class="modal-actions">
+            <button id="wishlistBtn" class="neon-cyan">Add to Wishlist</button>
+            <button id="customizeBtn" class="neon-magenta">Customize Car</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-specs" id="modalSpecs"></div>
+    </div>
+  </div>
+
+  <!-- CONFIGURATOR -->
+  <section id="configurator" class="hidden">
+    <div class="configurator-left glass">
+      <div id="threeContainer"></div>
+      <div class="viewer-controls">
+        <button id="rotateLeft" title="Rotate Left">&#8592;</button>
+        <button id="rotateRight" title="Rotate Right">&#8594;</button>
+        <button id="zoomIn" title="Zoom In">+</button>
+        <button id="zoomOut" title="Zoom Out">-</button>
+      </div>
+    </div>
+    <div class="configurator-right glass">
+      <h2>Customize Your Car</h2>
+      <div id="modOptions"></div>
+      <div class="price-panel">
+        <div>Base Price: <span id="basePrice"></span></div>
+        <div>Mods: <span id="modsPrice"></span></div>
+        <div class="total-price-glow">Total: <span id="totalPrice"></span></div>
+      </div>
+      <div class="configurator-actions">
+        <button id="resetBuild" class="neon-cyan">Reset Build</button>
+        <button id="randomBuild" class="neon-magenta">Random Build</button>
+        <button id="shareBuild" class="neon-cyan">Share Build</button>
+        <button id="checkoutBtn" class="neon-magenta">Checkout</button>
+      </div>
+      <div id="modRecommendations" class="mod-recommendations"></div>
+    </div>
+  </section>
+
+  <!-- WISHLIST & RECENTLY VIEWED -->
+  <section id="wishlistSection" class="glass hidden">
+    <h2>Wishlist</h2>
+    <div id="wishlistGrid" class="mini-grid"></div>
+  </section>
+  <section id="recentSection" class="glass hidden">
+    <h2>Recently Viewed</h2>
+    <div id="recentGrid" class="mini-grid"></div>
+  </section>
+
+  <!-- CHECKOUT MODAL -->
+  <div id="checkoutModal" class="modal hidden">
+    <div class="modal-bg"></div>
+    <div class="modal-content glass">
+      <button class="close-modal">&times;</button>
+      <h2>Order Summary</h2>
+      <div id="checkoutSummary"></div>
+      <button id="confirmOrder" class="neon-magenta">Confirm Order</button>
+    </div>
+  </div>
+
+  <!-- CONFETTI CANVAS -->
+  <canvas id="confettiCanvas" class="hidden"></canvas>
+
+  <!-- SCRIPTS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
